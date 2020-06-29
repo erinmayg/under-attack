@@ -7,9 +7,6 @@ using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 
 public class MainMenu : MonoBehaviour {
-    // [SerializeField] private GameObject newGame;
-    // [SerializeField] private GameObject resumeGame;
-
     [SerializeField] private GameObject firstMenu;
     [SerializeField] private GameObject secondMenu;
     [SerializeField] private GameObject playOrAlmanac;
@@ -34,8 +31,6 @@ public class MainMenu : MonoBehaviour {
         }
     }
     private void Start() {
-        // newGame.SetActive(true);
-        // resumeGame.SetActive(true);
         firstMenu.SetActive(true);
         secondMenu.SetActive(false);
         inputWindow.SetActive(false);
@@ -64,6 +59,8 @@ public class MainMenu : MonoBehaviour {
         inputWindow.gameObject.SetActive(false);
         warningText.gameObject.SetActive(false);
         secondMenu.SetActive(false);
+        usersWindow.SetActive(false);
+        playOrAlmanac.SetActive(false);
         firstMenu.SetActive(true);
         EventSystem.current.SetSelectedGameObject(EventSystem.current.firstSelectedGameObject);
     }
@@ -72,20 +69,10 @@ public class MainMenu : MonoBehaviour {
         buttonSound.Play();
         firstMenu.SetActive(false);
         secondMenu.SetActive(true);
-        // newGame.SetActive(false);
-        // resumeGame.SetActive(false);
-
         usersWindow.gameObject.SetActive(true);
         EventSystem.current.SetSelectedGameObject(users[0].gameObject);
     }
 
-    // public void SelectUser() {
-    //     if (isNewGame) {
-    //         inputWindow.SetActive(true);
-    //     } else {
-    //         PlayOrAlmanac();
-    //     }
-    // }
 
     public void PlayOrAlmanac() {
         buttonSound.Play();
