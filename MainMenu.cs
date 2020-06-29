@@ -11,8 +11,9 @@ public class MainMenu : MonoBehaviour {
     // [SerializeField] private GameObject resumeGame;
 
     [SerializeField] private GameObject firstMenu;
+    [SerializeField] private GameObject secondMenu;
+    [SerializeField] private GameObject playOrAlmanac;
     [SerializeField] private GameObject playButton;
-    [SerializeField] private GameObject almanac;
     [SerializeField] private GameObject inputWindow;
     [SerializeField] private GameObject confirmButton;
     [SerializeField] private GameObject usersWindow;
@@ -22,6 +23,7 @@ public class MainMenu : MonoBehaviour {
 
     [SerializeField] private TextMeshProUGUI warningText;
     [SerializeField] private AudioSource buttonSound;
+    [SerializeField] private AudioSource backSound;
 
     private static int user;
     private bool isNewGame = false;
@@ -35,8 +37,7 @@ public class MainMenu : MonoBehaviour {
         // newGame.SetActive(true);
         // resumeGame.SetActive(true);
         firstMenu.SetActive(true);
-        playButton.SetActive(false);
-        almanac.SetActive(false);
+        secondMenu.SetActive(false);
         inputWindow.SetActive(false);
         usersWindow.gameObject.SetActive(false);
     }
@@ -57,18 +58,20 @@ public class MainMenu : MonoBehaviour {
         isNewGame = isNew;
     }
 
-    public void CloseNewGame() {
+    public void Back() {
+        backSound.Play();
         usersWindow.gameObject.SetActive(false);
         inputWindow.gameObject.SetActive(false);
         warningText.gameObject.SetActive(false);
-        // newGame.SetActive(true);
-        // resumeGame.SetActive(true);
+        secondMenu.SetActive(false);
         firstMenu.SetActive(true);
         EventSystem.current.SetSelectedGameObject(EventSystem.current.firstSelectedGameObject);
     }
 
     public void ViewUsers() {
+        buttonSound.Play();
         firstMenu.SetActive(false);
+        secondMenu.SetActive(true);
         // newGame.SetActive(false);
         // resumeGame.SetActive(false);
 
@@ -85,9 +88,10 @@ public class MainMenu : MonoBehaviour {
     // }
 
     public void PlayOrAlmanac() {
-        usersParent.gameObject.SetActive(false);
-        playButton.SetActive(true);
-        almanac.SetActive(true);
+        buttonSound.Play();
+        usersWindow.gameObject.SetActive(false);
+        playOrAlmanac.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(playButton);
     }
 
     public void NewGame() {
@@ -125,6 +129,7 @@ public class MainMenu : MonoBehaviour {
     }
 
     public void Almanac() {
+        buttonSound.Play();
         SceneManager.LoadScene("almanac");
     }
 
@@ -138,6 +143,7 @@ public class MainMenu : MonoBehaviour {
     }
 
     public void SelectUser(int i) {
+        buttonSound.Play();
         SetUser(i);
         if (IsNewGame()) {
             inputWindow.SetActive(true);
@@ -154,6 +160,6 @@ public class MainMenu : MonoBehaviour {
     }
 
     private bool IsNewGame() {
-        return users[user].text.Equals("NEW GAME");
+        return users[user-1].text.Equals("NEW GAME");
     }
 }
