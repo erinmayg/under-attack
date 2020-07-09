@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations;
 
 public class PlayerCombat : MonoBehaviour
 {
@@ -52,6 +53,7 @@ public class PlayerCombat : MonoBehaviour
         player = GetComponent<PlayerMovement>();
         rb = GetComponent<Rigidbody2D>();
         gravityScale = rb.gravityScale;
+
     }
     
     // Update is called once per frame
@@ -175,5 +177,13 @@ public class PlayerCombat : MonoBehaviour
         if (GroundPoundPoint == null) return;
 
         Gizmos.DrawWireSphere(GroundPoundPoint.position, smashRadius);
+    }
+
+    public void ChangeBullet(GameObject bullet) {
+        bulletPrefab = bullet;
+    }
+
+    public GameObject GetBullet() {
+        return bulletPrefab;
     }
 }

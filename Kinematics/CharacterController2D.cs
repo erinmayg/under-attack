@@ -150,10 +150,11 @@ public class CharacterController2D : MonoBehaviour
 
 		// Move a few space backwards if hit enemy.
         if (other.gameObject.tag == "Enemy") {
+			m_Rigidbody2D.velocity = Vector2.zero;
 			if (other.gameObject.transform.position.x > gameObject.transform.position.x) {
-				m_Rigidbody2D.AddForce(new Vector2(-2000f, 100f));
+				m_Rigidbody2D.AddForce(new Vector2(-100f, 0f));
 			} else {
-				m_Rigidbody2D.AddForce(new Vector2(2000f, 100f));
+				m_Rigidbody2D.AddForce(new Vector2(100f, 0f));
 			}
         }
     }

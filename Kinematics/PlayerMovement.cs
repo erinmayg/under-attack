@@ -15,9 +15,11 @@ public class PlayerMovement : MonoBehaviour {
 
     [SerializeField] private AudioSource jumpSound;
     [SerializeField] private AudioSource playerHurt;
+    [SerializeField] private GameObject gameOverUI;
 
     // Start is called before the first frame update
     private void Start() {
+        if (gameOverUI != null) gameOverUI.SetActive(false);
         controller = GetComponent<CharacterController2D>();
         animator = GetComponent<Animator>();
     }
@@ -65,7 +67,9 @@ public class PlayerMovement : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.tag == "DeathZone") {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            Time.timeScale = 0f;
+            gameOverUI.SetActive(true);
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 

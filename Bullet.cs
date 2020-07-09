@@ -8,6 +8,7 @@ public class Bullet : MonoBehaviour {
     private Rigidbody2D rb;
 
     [SerializeField] private int damage = 40;
+    [SerializeField] private int type;
     // Start is called before the first frame update
     void Start() {
         rb = GetComponent<Rigidbody2D>();
@@ -37,8 +38,14 @@ public class Bullet : MonoBehaviour {
                 Destroy(this.gameObject);
                 return;
             }
+
+            Enemy enemy = other.gameObject.GetComponent<Enemy>();
             
-            other.gameObject.GetComponent<Enemy>().TakeDamage(damage);
+            if (enemy != null && enemy.GetBulletType() == type) {
+                Debug.Log("Enemy hit");
+                enemy.TakeDamage(damage);
+            }
+            
         } else if (other.gameObject.CompareTag("Destructible")) {
             other.gameObject.GetComponent<DestructibleTile>().TakeDamage(damage);
         }
@@ -49,6 +56,10 @@ public class Bullet : MonoBehaviour {
     private void OnBecameInvisible() {
         enabled = false;
         Destroy(gameObject);
+    }
+
+    public int GetBulletType() {
+        return type;
     }
 
 }

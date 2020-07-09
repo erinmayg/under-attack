@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private HealthBar healthBar;
     [SerializeField] private int maxHealth = 100;
     private int health;
+    [SerializeField] private int bulletType;
     [SerializeField] private float speed = 5f;
     [SerializeField] protected int damage = 20;
     [SerializeField] private float dazedTime = .6f;
@@ -20,13 +21,14 @@ public class Enemy : MonoBehaviour
     [Header("Sound FX")]
     [SerializeField] private AudioSource enemyDead;
 
-    private Animator animator;
-    private Rigidbody2D rb;
-    private Collider2D coll;
+    [SerializeField] private ParticleSystem deadEffect;
 
+    protected Animator animator;
+    protected Rigidbody2D rb;
+    private Collider2D coll;
     protected bool facingLeft = true;
 
-    protected void Start() {
+    protected virtual void Start() {
         rb = GetComponent<Rigidbody2D>();
         coll = GetComponent<Collider2D>();
         animator = GetComponent<Animator>();
@@ -40,7 +42,6 @@ public class Enemy : MonoBehaviour
     }
 
     protected void Update() {
-
         Move();
 
         if (healthBar != null) {
@@ -53,7 +54,6 @@ public class Enemy : MonoBehaviour
     }
 
     private void FixedUpdate() {
-        
         animator.SetBool("Hurt", false);
     }
 
@@ -104,6 +104,7 @@ public class Enemy : MonoBehaviour
 
     void Death() {
         //enemyDead.Play();
+        Instantiate(deadEffect, transform.position, transform.rotation);
         Destroy(gameObject);
     }
 
@@ -121,5 +122,9 @@ public class Enemy : MonoBehaviour
 
     public int getDamage() {
         return damage;
+    }
+
+    public int GetBulletType() {
+        return bulletType;
     }
 }

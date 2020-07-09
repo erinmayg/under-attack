@@ -37,15 +37,17 @@ public class PlayerStats : MonoBehaviour {
 		healthBar.SetMaxHealth(maxHealth);
 		nutrigems = 0;
 		sceneIndex = SceneManager.GetActiveScene().buildIndex;
-		mucins = sceneIndex - 3;
-		GP1b = sceneIndex - 7;
-		
-		if (mucins >= 3) {
-			specialCollectiblesUI.Add(GP1b);
-		} else {
-			specialCollectiblesUI.Add(mucins);
+
+		if (specialCollectiblesUI != null) {
+			mucins = sceneIndex - 3;
+			GP1b = sceneIndex - 7;
+			
+			if (mucins >= 3) {
+				specialCollectiblesUI.Add(GP1b);
+			} else {
+				specialCollectiblesUI.Add(mucins);
+			}
 		}
-		
 	}
 
 	private void OnTriggerEnter2D(Collider2D other) {
