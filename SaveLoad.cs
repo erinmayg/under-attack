@@ -12,18 +12,12 @@ public class SaveLoad: MonoBehaviour {
     private static int sceneToContinue;
     private static int currentNutrigems;
     private static int savedNutrigems;
-    // private Dictionary<string, int> powerups = new Dictionary<string, int>();
-    // private Dictionary<string, int> characters = new Dictionary<string, int>();
-    // private Dictionary<string, int> pathogens = new Dictionary<string, int>();
 
+    private static string[] powerups = {"Shield", "NKC"};
     private static string[] data = {"username", "CurrScene", "CurrNutrigems"};
 
     // public static SaveLoad saveManager = new SaveLoad();
 
-    // private void OnValidate() {
-
-    //     AddPowerups();
-    // }
 
     // private void AddPowerups() {
 
@@ -40,37 +34,9 @@ public class SaveLoad: MonoBehaviour {
     //     powerups[name] = 1;
     // }
 
-    // private void AddCharacters(string name) {
-    //     characters.Add("Whiteboi", 0);
-    //     characters.Add("Oldie", 0);
-    // }
-
-    // public void AddCharacter(string name) {
-    //     characters[name] = 1;
-    // }    
-
-    // public void AddPathogen(string name) {
-    //     pathogens[name] = 1;
-    // }
-
-    // public void SaveCharacters(string[] characters) {
-    //     foreach(string character in characters) {
-    //         this.characters[character] = 1;
-    //     }
-
-    //     Save();
-    // }
-
-    // public void SavePathogens(string[] characters) {
-    //     foreach(string character in characters) {
-    //         pathogens[character] = 1;
-    //     }
-
-    //     Save();
-    // }
-
-    public static void Save(string powerupName) {
+    public static void Save(int powerupID) {
         // AddPowerup(powerupName);
+        PlayerPrefs.SetInt(powerups[powerupID] + user, 1);
         Save();
     }
 
@@ -82,14 +48,6 @@ public class SaveLoad: MonoBehaviour {
         
         // foreach(string powerup in powerups.Keys) {
         //     PlayerPrefs.SetInt(powerup + user, powerups[powerup]);
-        // }
-
-        // foreach(string character in characters.Keys) {
-        //     PlayerPrefs.SetInt(character + user, characters[character]);
-        // }
-
-        // foreach(string character in pathogens.Keys) {
-        //     PlayerPrefs.SetInt(character + user, pathogens[character]);
         // }
     }
 
@@ -103,9 +61,6 @@ public class SaveLoad: MonoBehaviour {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
-    // public static int GetNutrigems() {
-    //     return savedNutrigems;
-    // }
 
     public static int GetLevel() {
         int sceneIndex = PlayerPrefs.GetInt("CurrScene" + user);
@@ -118,9 +73,30 @@ public class SaveLoad: MonoBehaviour {
         }
     }
 
+    public static int GetNutrigems() {
+        return PlayerPrefs.GetInt("CurrNutrigems" + user);
+    }
+
+    public static int GetPowerup(int powerupID) {
+        return PlayerPrefs.GetInt(powerups[powerupID] + user, 0);
+    }
+
+    public static int[] GetSuperpower() {
+        int[] superpowers = new int[powerups.Length];
+        for (int i = 0; i < superpowers.Length; i++) {
+            superpowers[i] = GetPowerup(i);
+        }
+
+        return superpowers;
+    }
+
     public static void ResetData(int user) {
         foreach(string playerdata in data) {
             PlayerPrefs.DeleteKey(playerdata + user);
+        }
+
+        foreach(string powerup in powerups) {
+            PlayerPrefs.DeleteKey(powerup + user);
         }
     }
 }

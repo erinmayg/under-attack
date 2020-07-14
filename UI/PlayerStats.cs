@@ -28,19 +28,22 @@ public class PlayerStats : MonoBehaviour {
 
 	private PlayerMovement player;
 
+	private int minLevel1 = 3;
+	private int minLevel2 = 8;
+
 	private void Awake() {
 		player = GetComponent<PlayerMovement>();
 	}
 
 	protected virtual void Start() {
 		currHealth = maxHealth;
-		healthBar.SetMaxHealth(maxHealth);
+		if (healthBar != null) healthBar.SetMaxHealth(maxHealth);
 		nutrigems = 0;
 		sceneIndex = SceneManager.GetActiveScene().buildIndex;
 
 		if (specialCollectiblesUI != null) {
-			mucins = sceneIndex - 3;
-			GP1b = sceneIndex - 7;
+			mucins = sceneIndex - minLevel1;
+			GP1b = sceneIndex - minLevel2;
 			
 			if (mucins >= 3) {
 				specialCollectiblesUI.Add(GP1b);
@@ -80,17 +83,7 @@ public class PlayerStats : MonoBehaviour {
 				? other.gameObject.GetComponent<Enemy>().getDamage()
 				: other.gameObject.GetComponent<Bullet_Enemy>().getDamage();
 
-			if (shield.activeSelf) {
-				Debug.Log("Shield active");
-				shield.GetComponent<Shield>().TakeDamage(damage);
-			} else {
-				currHealth -= damage;
-				healthBar.SetHealth(currHealth);
-			}
-		}
-
-		if (currHealth <= 0) {
-			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+			TakeDamage(damage);
 		}
 	}
 
@@ -101,12 +94,20 @@ public class PlayerStats : MonoBehaviour {
 	public static int GetNutrigems() {
 		return nutrigems;
 	}
+
+	public static void Purchase(int price) {
+		nutrigems -= price;
+	}
 	
 	public void TakeDamage(int damage) {
-		currHealth -= damage;
-		healthBar.SetHealth(currHealth);
-
-		player.Hurt();
+		if (shield.activeSelf) {
+				Debug.Log("Shield active");
+				shield.GetComponent<Shield>().TakeDamage(damage);
+		} else {
+			currHealth -= damage;
+			healthBar.SetHealth(currHealth);
+			player.Hurt();
+		}
 
 		if (currHealth <= 0) {
 			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -114,8 +115,8 @@ public class PlayerStats : MonoBehaviour {
 	}
 
 	private int GetLevel() {
-		int maxIndexLvl1 = 5;
-		int maxIndexLvl2 = 9;
+		int maxIndexLvl1 = minLevel1 + 2;
+		int maxIndexLvl2 = minLevel2 + 2;
 
         if (sceneIndex <= maxIndexLvl1) {
             return 1;

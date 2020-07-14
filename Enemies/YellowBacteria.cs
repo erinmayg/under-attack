@@ -25,8 +25,7 @@ public class YellowBacteria: Enemy {
     private float initTimer;
 
     private void Awake() {
-        initTimer = timer;                   
-        // anim = GetComponent<Animator>();
+        initTimer = timer;      
     }
 
     protected override void Move() {
@@ -71,19 +70,6 @@ public class YellowBacteria: Enemy {
         if (!inRange) {
             StopAttack();
         }
-
-        //When player is detected
-        // if (hit) {
-        //     EnemyBehaviour();
-        // } else {
-        //     Debug.Log("hit null");
-        //     inRange = false;
-        // }
-
-        // if(!inRange) {
-        //     anim.SetBool("canAttack", false);
-        //     //StopAttack();
-        // }
     }
 
     void EnemyBehaviour() {
@@ -107,7 +93,7 @@ public class YellowBacteria: Enemy {
     private void MoveTowardsPlayer() {
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("yellowAttack")) {
             Debug.Log("Enemy moving towards player");
-            //Vector2 targetPosition = new Vector2(target.transform.position.x, transform.position.y);
+            
             float target_xpos = target.transform.position.x;
             float xpos = transform.position.x;
             
@@ -117,12 +103,24 @@ public class YellowBacteria: Enemy {
                 Flip();
             }
 
+            // if (transform.position.x > rightCap || transform.position.x < leftCap) return;
+
             transform.position = Vector2.MoveTowards(transform.position, target.transform.position, 
                                                      moveSpeed * Time.deltaTime);
         }
     }
 
     protected virtual void Attack() {
+
+        float target_xpos = target.transform.position.x;
+        float xpos = transform.position.x;
+
+        if (target_xpos < xpos && !facingLeft) {
+            Flip();
+        } else if (target_xpos > xpos && facingLeft) {
+            Flip();
+        }
+
         timer = initTimer;
         attackMode = true;
         animator.SetBool("canAttack", true);
@@ -157,11 +155,4 @@ public class YellowBacteria: Enemy {
     private void OnDrawGizmos() {
         Gizmos.DrawWireSphere(transform.position, attackDistance);
     }
-
-    protected void Flip() {
-		// Switch the way the player is labelled as facing.
-        facingLeft = !facingLeft;
-		transform.Rotate(0f, 180f, 0f);
-	}
-
 }

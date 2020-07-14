@@ -18,14 +18,14 @@ public class PauseMenu : MonoBehaviour {
     public void ActivateMenu() {
         isPaused = true;
         Time.timeScale = 0f; //to freeze the screen
-        AudioListener.pause = true; //to pause the audio
+        //AudioListener.pause = true; //to pause the audio
         pauseMenuUI.SetActive(true); //to pop up the pause menu UI
     }
 
     public void DeactivateMenu() {
         isPaused = false;
         Time.timeScale = 1f; //to unfreeze the screen
-        AudioListener.pause = false; //to resume the audio
+        //AudioListener.pause = false; //to resume the audio
         pauseMenuUI.SetActive(false);
     }
 

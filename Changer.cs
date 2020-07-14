@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Changer : MonoBehaviour {
 
-    private string[] bulletColor = {"Default", "Yellow"};
+    private string[] bulletColor = {"Default", "Yellow", "Red"};
     [SerializeField] private GameObject bullet;
     private GameObject prevBullet;
 

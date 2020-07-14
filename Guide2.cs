@@ -10,7 +10,9 @@ public class Guide2 : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D other) {
         player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-        i++;
-        dialogues[i].gameObject.SetActive(true);
+        if (i < dialogues.Length - 1) {
+            i++;
+            dialogues[i].gameObject.SetActive(true);
+        }
     }
 }

@@ -47,7 +47,7 @@ public class PlayerCombat : MonoBehaviour
     private void Start() {
         currAttackTime = 0;
         currShootTime = 0;
-        antibodyUI.SetMaxTime(shootInterval);
+        if (antibodyUI != null) antibodyUI.SetMaxTime(shootInterval);
 
         controller = GetComponent<CharacterController2D>();
         player = GetComponent<PlayerMovement>();
@@ -84,7 +84,7 @@ public class PlayerCombat : MonoBehaviour
             // groundPound_lift.Play();
         }
 
-        antibodyUI.SetTime(shootInterval - currShootTime);
+        if (antibodyUI != null) antibodyUI.SetTime(shootInterval - currShootTime);
     }
 
     private void FixedUpdate() {
@@ -152,7 +152,7 @@ public class PlayerCombat : MonoBehaviour
     }
 
     private void CompleteGroundPound() {
-        // groundPound_smash.Play();
+        if (groundPound_smash != null) groundPound_smash.Play();
 
         // Destroy destructible tiles
         Collider2D[] destructibles = Physics2D.OverlapCircleAll(GroundPoundPoint.position, smashRadius, destructibleLayer);
@@ -160,11 +160,11 @@ public class PlayerCombat : MonoBehaviour
             Destroy(destructible.gameObject);
         }
 
-        // Damage surrounding enemies
-        Collider2D[] enemies = Physics2D.OverlapCircleAll(GroundPoundPoint.position, smashRadius, enemyLayer);
-        foreach(Collider2D enemy in enemies) {
-            enemy.GetComponent<Enemy>().TakeDamage(smashDamage);
-        }
+        // // Damage surrounding enemies
+        // Collider2D[] enemies = Physics2D.OverlapCircleAll(GroundPoundPoint.position, smashRadius, enemyLayer);
+        // foreach(Collider2D enemy in enemies) {
+        //     enemy.GetComponent<Enemy>().TakeDamage(smashDamage);
+        // }
 
         groundPound = false;
     }

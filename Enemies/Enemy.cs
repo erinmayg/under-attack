@@ -11,17 +11,17 @@ public class Enemy : MonoBehaviour
     [SerializeField] private int bulletType;
     [SerializeField] private float speed = 5f;
     [SerializeField] protected int damage = 20;
-    [SerializeField] private float dazedTime = .6f;
+    [SerializeField] private float dazedTime = 1f;
     private float currDazedTime = 0f;
 
     [Header("Boundaries")]
-    [SerializeField] private float leftCap;
-    [SerializeField] private float rightCap;
+    [SerializeField] protected float leftCap;
+    [SerializeField] protected float rightCap;
 
     [Header("Sound FX")]
     [SerializeField] private AudioSource enemyDead;
 
-    [SerializeField] private ParticleSystem deadEffect;
+    [SerializeField] protected ParticleSystem deadEffect;
 
     protected Animator animator;
     protected Rigidbody2D rb;
@@ -41,7 +41,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    protected void Update() {
+    protected virtual void Update() {
         Move();
 
         if (healthBar != null) {
@@ -64,31 +64,40 @@ public class Enemy : MonoBehaviour
             return;
         }
 
-        if (facingLeft) {
-            if (transform.position.x > leftCap) {
+        // if (facingLeft) {
+        //     if (transform.position.x > leftCap) {
 
-                if (transform.localScale.x < 0) {
-                    transform.localScale = new Vector3(-1 * transform.localScale.x, transform.localScale.y);
-                }
+        //         if (transform.localScale.x < 0) {
+        //             transform.localScale = new Vector3(-1 * transform.localScale.x, transform.localScale.y);
+        //         }
 
-                rb.velocity = new Vector2(-speed, 0);
-            } else {
-                facingLeft = false;
-            }
-        } else {
-            if (transform.position.x < rightCap) {
-                if (transform.localScale.x > 0) {
-                    transform.localScale = new Vector3(-1 * transform.localScale.x, transform.localScale.y);
-                }
+        //         rb.velocity = new Vector2(-speed, 0);
 
-                rb.velocity = new Vector2(speed, 0);
-            } else {
-                facingLeft = true;
-            }
-        }
+        //     } else {
+        //         facingLeft = false;
+        //     }
+        // } else {
+        //     if (transform.position.x < rightCap) {
+
+        //         if (transform.localScale.x > 0) {
+        //             transform.localScale = new Vector3(-1 * transform.localScale.x, transform.localScale.y);
+        //         }
+
+        //         rb.velocity = new Vector2(speed, 0);
+        //     } else {
+        //         facingLeft = true;
+        //     }
+        // }
+
+        if (transform.position.x < leftCap && facingLeft || 
+            transform.position.x > rightCap && !facingLeft) Flip();
+
+        rb.velocity = facingLeft 
+            ? new Vector2(-speed, 0)
+            : new Vector2(speed, 0);
     }
 
-    public void TakeDamage(int damage) {
+    public virtual void TakeDamage(int damage) {
         animator.SetBool("Hurt", true);
 
         currDazedTime = dazedTime;
@@ -102,13 +111,15 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void Death() {
+    protected virtual void Death() {
         //enemyDead.Play();
-        Instantiate(deadEffect, transform.position, transform.rotation);
+        if (deadEffect != null) Instantiate(deadEffect, transform.position, transform.rotation);
         Destroy(gameObject);
     }
 
     private void OnCollisionEnter2D(Collision2D other) {
+        
+        if (other.gameObject.CompareTag("Destructible")) return;
         
         // Move a few space backwards if got hit by bullet.
         if (other.gameObject.tag == "Bullet") {
@@ -117,6 +128,8 @@ public class Enemy : MonoBehaviour
 			} else {
 				rb.AddForce(new Vector2(100f, 0f));
 			}
+        } else {
+            Flip();
         }
     }
 
@@ -126,5 +139,10 @@ public class Enemy : MonoBehaviour
 
     public int GetBulletType() {
         return bulletType;
+    }
+
+    protected void Flip() {
+        facingLeft = !facingLeft;
+        transform.Rotate(0f, 180f, 0f);
     }
 }

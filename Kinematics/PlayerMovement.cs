@@ -68,8 +68,8 @@ public class PlayerMovement : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.tag == "DeathZone") {
             Time.timeScale = 0f;
-            gameOverUI.SetActive(true);
-            //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            if (gameOverUI != null) gameOverUI.SetActive(true);
+            else SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 
