@@ -120,6 +120,11 @@ public class MainMenu : MonoBehaviour {
         SceneManager.LoadScene("almanac");
     }
 
+    public void Minigame() {
+        buttonSound.Play();
+        SceneManager.LoadScene("minigame");
+    }
+
     public static int GetUser() {
         return user;
     }
@@ -148,5 +153,9 @@ public class MainMenu : MonoBehaviour {
 
     private bool IsNewGame() {
         return users[user-1].text.Equals("NEW GAME");
+    }
+
+    public void Credits() {
+        SceneManager.LoadScene("creditroll");
     }
 }

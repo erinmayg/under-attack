@@ -9,6 +9,8 @@ public class Bullet : MonoBehaviour {
 
     [SerializeField] private int damage = 40;
     [SerializeField] private int type;
+
+    [SerializeField] private bool isNKC = false;
     // Start is called before the first frame update
     void Start() {
         rb = GetComponent<Rigidbody2D>();
@@ -31,6 +33,15 @@ public class Bullet : MonoBehaviour {
     private void OnCollisionEnter2D(Collision2D other) {
         if (other.gameObject.tag == "Player" || other.gameObject.tag == "Collectible") return;
 
+        if (isNKC) {
+            if (other.gameObject.CompareTag("Destructible") ||
+                (other.gameObject.CompareTag("Enemy") && other.gameObject.GetComponent<Enemy>() != null)) {
+                Destroy(other.gameObject);
+            }
+
+            Destroy(gameObject);
+        }
+
         if (other.gameObject.tag == "Enemy") {
 
             if (other.gameObject.GetComponent<Bullet_Enemy>() != null) {
@@ -44,6 +55,9 @@ public class Bullet : MonoBehaviour {
             if (enemy != null && enemy.GetBulletType() == type) {
                 Debug.Log("Enemy hit");
                 enemy.TakeDamage(damage);
+            } else {
+                Boss boss = other.gameObject.GetComponent<Boss>();
+                if (boss != null) boss.TakeDamage(damage);
             }
             
         } else if (other.gameObject.CompareTag("Destructible")) {
@@ -61,5 +75,4 @@ public class Bullet : MonoBehaviour {
     public int GetBulletType() {
         return type;
     }
-
 }

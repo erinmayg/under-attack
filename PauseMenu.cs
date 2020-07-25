@@ -2,10 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class PauseMenu : MonoBehaviour {
     [SerializeField] private GameObject pauseMenuUI;
+    [SerializeField] private GameObject resumeButton;
+    [SerializeField] private GameObject settingsUI;
     [SerializeField] private bool isPaused;
+
+    private void Start() {
+        pauseMenuUI.SetActive(false);
+        settingsUI.SetActive(false);
+    }
 
     private void Update() {
         if (!isPaused && Input.GetButtonDown("Menu")) {
@@ -19,7 +27,10 @@ public class PauseMenu : MonoBehaviour {
         isPaused = true;
         Time.timeScale = 0f; //to freeze the screen
         //AudioListener.pause = true; //to pause the audio
+        
+        settingsUI.SetActive(false);
         pauseMenuUI.SetActive(true); //to pop up the pause menu UI
+        EventSystem.current.SetSelectedGameObject(resumeButton);
     }
 
     public void DeactivateMenu() {

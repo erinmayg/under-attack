@@ -1,8 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class CharacterController2D : MonoBehaviour
-{
+public class CharacterController2D : MonoBehaviour {
 	[Header("Jump Controls")]
 	[SerializeField] private float m_JumpForce = 250f;							// Amount of force added when the player jumps.
 	
@@ -161,5 +160,9 @@ public class CharacterController2D : MonoBehaviour
 
 	public bool IsGrounded() {
 		return m_Grounded;
+	}
+
+	public bool isTouchingWall() {
+		return m_TouchingWall;
 	}
 }

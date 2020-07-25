@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
-{
+public class Enemy : MonoBehaviour {
     [Header("Stats")]
     [SerializeField] private HealthBar healthBar;
     [SerializeField] private int maxHealth = 100;

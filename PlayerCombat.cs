@@ -104,7 +104,8 @@ public class PlayerCombat : MonoBehaviour
         meleeSound.Play();
         foreach (Collider2D enemy in enemies) {
             if (!enemy.isTrigger) {
-                enemy.GetComponent<Enemy>().TakeDamage(damage);
+                if (enemy.GetComponent<Enemy>() != null) enemy.GetComponent<Enemy>().TakeDamage(damage);
+                else enemy.GetComponent<Boss>().TakeDamage(damage);
             }
         }
 
@@ -160,11 +161,11 @@ public class PlayerCombat : MonoBehaviour
             Destroy(destructible.gameObject);
         }
 
-        // // Damage surrounding enemies
-        // Collider2D[] enemies = Physics2D.OverlapCircleAll(GroundPoundPoint.position, smashRadius, enemyLayer);
-        // foreach(Collider2D enemy in enemies) {
-        //     enemy.GetComponent<Enemy>().TakeDamage(smashDamage);
-        // }
+        // Damage surrounding enemies
+        Collider2D[] enemies = Physics2D.OverlapCircleAll(GroundPoundPoint.position, smashRadius, enemyLayer);
+        foreach(Collider2D enemy in enemies) {
+            enemy.GetComponent<Enemy>().TakeDamage(smashDamage);
+        }
 
         groundPound = false;
     }

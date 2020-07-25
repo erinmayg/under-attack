@@ -7,20 +7,21 @@ using TMPro;
 
 public class PlayerStats : MonoBehaviour {
     protected static int nutrigems = 0;
-	private int mucins;
-	private int GP1b;
+	private int collectibles;
 
 	[Header("UI")]
 	[SerializeField] protected TextMeshProUGUI nutrigemsNumber;
 	[SerializeField] private SpecialCollectibles specialCollectiblesUI;
+	[SerializeField] private GameObject gameOverUI;
 
-	private int maxHealth = 100;
-	private int currHealth;
+	[SerializeField] private int maxHealth = 100;
+	private float currHealth;
 	[SerializeField] private HealthBar healthBar;
 	private int sceneIndex;
 
 	[Header("Powerups")]
 	[SerializeField] private GameObject shield;
+	private bool isNKC = false;
 
 	[Header("Sound FX")]
 	[SerializeField] private AudioSource nutrigemSound;
@@ -28,28 +29,26 @@ public class PlayerStats : MonoBehaviour {
 
 	private PlayerMovement player;
 
-	private int minLevel1 = 3;
-	private int minLevel2 = 8;
+	private int level;
 
 	private void Awake() {
 		player = GetComponent<PlayerMovement>();
 	}
 
 	protected virtual void Start() {
+		if (gameOverUI != null) gameOverUI.SetActive(false);
+		Time.timeScale = 1f;
+
 		currHealth = maxHealth;
 		if (healthBar != null) healthBar.SetMaxHealth(maxHealth);
 		nutrigems = 0;
+		
 		sceneIndex = SceneManager.GetActiveScene().buildIndex;
+		level = SaveLoad.GetLevel();
+		Collectibles(level);
 
 		if (specialCollectiblesUI != null) {
-			mucins = sceneIndex - minLevel1;
-			GP1b = sceneIndex - minLevel2;
-			
-			if (mucins >= 3) {
-				specialCollectiblesUI.Add(GP1b);
-			} else {
-				specialCollectiblesUI.Add(mucins);
-			}
+			specialCollectiblesUI.Add(collectibles);
 		}
 	}
 
@@ -63,22 +62,28 @@ public class PlayerStats : MonoBehaviour {
 			} else if (other.GetComponent<SpecialCollectible>() != null) {
 				collectibleSound.Play();
 
-				if (mucins >= 3) {
-					GP1b += 1;
-					specialCollectiblesUI.Add(GP1b);
-				} else {
-					mucins += 1;
-					specialCollectiblesUI.Add(mucins);
-				}
+				collectibles++;
+				specialCollectiblesUI.Add(collectibles);
 			}
 
 			Destroy(other.gameObject);
-		} 
+		} else if (other.gameObject.tag == "DeathZone")
+		{
+
+			SaveLoad.Dead();
+			TakeDamage(10000);
+
+		}
 	}
 
 	private void OnCollisionEnter2D(Collision2D other) {
 		if (other.gameObject.CompareTag("Enemy")) {
 
+			if (isNKC) {
+				Destroy(other.gameObject);
+				return;
+			}
+			
 			int damage = other.gameObject.GetComponent<Enemy>() != null
 				? other.gameObject.GetComponent<Enemy>().getDamage()
 				: other.gameObject.GetComponent<Bullet_Enemy>().getDamage();
@@ -98,43 +103,52 @@ public class PlayerStats : MonoBehaviour {
 	public static void Purchase(int price) {
 		nutrigems -= price;
 	}
-	
-	public void TakeDamage(int damage) {
-		if (shield.activeSelf) {
-				Debug.Log("Shield active");
-				shield.GetComponent<Shield>().TakeDamage(damage);
-		} else {
+
+	public void TakeDamage(float damage)
+	{
+		if (shield.activeSelf)
+		{
+			Debug.Log("Shield active");
+			shield.GetComponent<Shield>().TakeDamage(damage);
+		}
+		else
+		{
 			currHealth -= damage;
-			healthBar.SetHealth(currHealth);
+			if (healthBar != null) healthBar.SetHealth(currHealth);
 			player.Hurt();
 		}
 
-		if (currHealth <= 0) {
-			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+		if (currHealth <= 0)
+		{
+			SaveLoad.Dead();
+			if (gameOverUI != null)
+			{
+				Time.timeScale = 0f;
+				gameOverUI.SetActive(true);
+			}
+			else
+			{
+				SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+			}
 		}
 	}
 
-	private int GetLevel() {
-		int maxIndexLvl1 = minLevel1 + 2;
-		int maxIndexLvl2 = minLevel2 + 2;
-
-        if (sceneIndex <= maxIndexLvl1) {
-            return 1;
-        } else if (sceneIndex <= maxIndexLvl2) {
-            return 2;
-        } else {
-            return 0;
-        }
-    }
-
-	public int GetSpecialCollectibles() {
-		if (GetLevel() == 1) {
-			return mucins;
-		} else if (GetLevel() == 2) {
-			return GP1b;
+	private void Collectibles(int level) {
+		if (level == 1) {
+			collectibles = sceneIndex - SaveLoad.minLevel1;
+		} else if (level == 2) {
+			collectibles = sceneIndex - (SaveLoad.minLevel2 + 1);
 		} else {
-			return 0;
+			collectibles = sceneIndex - (SaveLoad.maxLevel2 + 1);
 		}
+	}
+
+	public void ActivateNKC() {
+		isNKC = true;
+	}
+
+	public void DeactivateNKC() {
+		isNKC = false;
 	}
 
 }
