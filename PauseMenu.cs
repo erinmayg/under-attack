@@ -7,8 +7,11 @@ using UnityEngine.EventSystems;
 public class PauseMenu : MonoBehaviour {
     [SerializeField] private GameObject pauseMenuUI;
     [SerializeField] private GameObject resumeButton;
+    [SerializeField] private GameObject settingsButton;
     [SerializeField] private GameObject settingsUI;
     [SerializeField] private bool isPaused;
+
+    private bool isSettingsOpen = false;
 
     private void Start() {
         pauseMenuUI.SetActive(false);
@@ -19,7 +22,11 @@ public class PauseMenu : MonoBehaviour {
         if (!isPaused && Input.GetButtonDown("Menu")) {
             ActivateMenu();
         } else if (isPaused && Input.GetButtonDown("Menu")) {
-            DeactivateMenu();
+            if (isSettingsOpen) {
+                CloseSettings();
+            } else {
+                DeactivateMenu();
+            }
         }
     }
 
@@ -48,5 +55,16 @@ public class PauseMenu : MonoBehaviour {
     public void LoadAlmanac() {
         DeactivateMenu();
         SceneManager.LoadScene("almanac");
+    }
+
+    public void OpenSettings() {
+        isSettingsOpen = true;
+        settingsUI.SetActive(true);
+    }
+
+    public void CloseSettings() {
+        isSettingsOpen = false;
+        settingsUI.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(settingsButton);
     }
 }

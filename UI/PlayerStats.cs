@@ -67,11 +67,10 @@ public class PlayerStats : MonoBehaviour {
 			}
 
 			Destroy(other.gameObject);
-		} else if (other.gameObject.tag == "DeathZone")
-		{
+		} else if (other.gameObject.tag == "DeathZone") {
 
 			SaveLoad.Dead();
-			TakeDamage(10000);
+			TakeDamage(1000);
 
 		}
 	}
@@ -80,7 +79,7 @@ public class PlayerStats : MonoBehaviour {
 		if (other.gameObject.CompareTag("Enemy")) {
 
 			if (isNKC) {
-				Destroy(other.gameObject);
+				other.gameObject.GetComponent<Enemy>().Death();
 				return;
 			}
 			
@@ -134,12 +133,13 @@ public class PlayerStats : MonoBehaviour {
 	}
 
 	private void Collectibles(int level) {
+		Debug.Log(level);
 		if (level == 1) {
 			collectibles = sceneIndex - SaveLoad.minLevel1;
 		} else if (level == 2) {
 			collectibles = sceneIndex - (SaveLoad.minLevel2 + 1);
 		} else {
-			collectibles = sceneIndex - (SaveLoad.maxLevel2 + 1);
+			collectibles = sceneIndex - (SaveLoad.minLevel3); //+ 1);
 		}
 	}
 

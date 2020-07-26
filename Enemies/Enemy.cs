@@ -110,7 +110,7 @@ public class Enemy : MonoBehaviour {
         }
     }
 
-    protected virtual void Death() {
+    public virtual void Death() {
         //enemyDead.Play();
         if (deadEffect != null) Instantiate(deadEffect, transform.position, transform.rotation);
         Destroy(gameObject);

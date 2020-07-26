@@ -21,7 +21,9 @@ public class SaveLoad: MonoBehaviour {
     public static int minLevel1 = 3;
     public static int maxLevel1 = minLevel1 + 5;
     public static int minLevel2 = maxLevel1 + 1;
-    public static int maxLevel2 = minLevel2 + 5;
+    public static int maxLevel2 = minLevel2 + 6;
+    public static int minLevel3 = maxLevel2 + 1;
+    public static int maxLevel3 = minLevel3 + 2;
 
     public static void SetUser(int i) {
         user = i;
@@ -58,6 +60,7 @@ public class SaveLoad: MonoBehaviour {
 
     public static int GetLevel() {
         int sceneIndex = PlayerPrefs.GetInt("CurrScene" + user, SceneManager.GetActiveScene().buildIndex);
+
         if (sceneIndex < minLevel1) {
             return 0;
         } else if (sceneIndex <= maxLevel1) {
@@ -81,7 +84,7 @@ public class SaveLoad: MonoBehaviour {
         return PlayerPrefs.GetInt(powerups[powerupID] + user, 0);
     }
 
-    public static int[] GetSuperpower() {
+    public static int[] GetSuperpowers() {
         int[] superpowers = new int[powerups.Length];
         for (int i = 0; i < superpowers.Length; i++) {
             superpowers[i] = GetPowerup(i);
