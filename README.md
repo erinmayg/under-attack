@@ -5,6 +5,21 @@ To play the game, download the zip file or play it online on our <a href="https:
 <br>
 <a href="https://erinmayg.github.io/under-attack-website"><img width="60%" src="https://github.com/erinmayg/under-attack-website/blob/master/img/website.png"></a>
 
+## Installation and Download
+### Setting Up for PC
+1. Download the game zip file <a href="https://drive.google.com/file/d/1CFLTRtAmvPfNN8bO8YrPt1WKwSLRPiWP/view?usp=sharing" target="_blank">here</a>.
+2. Extract the files
+3. After extracting the files, just click <i>UnderAttack.exe</i> to play
+### Setting Up for Mac
+1. Download the game zip file <a href="https://drive.google.com/file/d/1SYI_WKxfS7460xFUkAIdnqSrJITXt0Fi/view?usp=sharing" target="_blank">here</a>.
+2. Go to folder named <i>Contents > Mac OS</i> and you will find a file named <i>Under Attack</i>
+3. If the game file is in the text format (or other than exe file), choose to open it with terminal
+4. If it is blocked, open <i>System Preferences > Security & Privacy</i>, click <i>Open Anyway</i>
+5. There will be prompt asking whether you are sure you want to open it, just click <i>Open</i>
+
+### Setting Up for Linux
+Download the game zip file <a href="https://drive.google.com/file/d/1GS3iHRwVYXiWkF70xkLWLfJq2LczFDJt/view?usp=sharing" target="_blank">here</a>.
+
 ## About the Game
 <img align="left" src="https://erinmayg.github.io/under-attack-website/img/level1.gif" height=180>
 UnderAttack is a 2D-platformer about the human immune system, inspired by the COVID-19 Pandemic. <br>
