@@ -17,9 +17,9 @@ Hence, the total sublevels for this game is 13.
 
 ## Game Features
 <p align="center">
-  <img align ="left" width="320" height="180" src="https://github.com/erinmayg/under-attack-website/blob/master/img/features/Game%20Features.png">
-  <img align ="center" width="320" height="180" src="https://erinmayg.github.io/under-attack-website/img/features/Almanac.png">
-  <img align ="right" width="320" height="180" src="https://erinmayg.github.io/under-attack-website/img/features/Gameplay.png">
+  <img align ="left" width="30%" height="17%" src="https://github.com/erinmayg/under-attack-website/blob/master/img/features/Game%20Features.png">
+  <img align ="center" width="30%" height="17%" src="https://erinmayg.github.io/under-attack-website/img/features/Almanac.png">
+  <img align ="right" width="30%" height="17%"src="https://erinmayg.github.io/under-attack-website/img/features/Gameplay.png">
 </p>
 
 ## Content
