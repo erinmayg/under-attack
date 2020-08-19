@@ -1,9 +1,9 @@
 # Under Attack
 The C# script for the 2D-platformer. This repository only contains the scripts created for the game. <br>
-To play the game, download the zip file or play it online on our <a href="https://erinmayg.github.io/under-attack-website">website!</a> <br>
+To play the game, download the zip file or play it online on our <a href="https://erinmayg.github.io/under-attack-website" target="_blank">website!</a> <br>
 
 <br>
-<a href="https://erinmayg.github.io/under-attack-website"><img width="60%" src="https://github.com/erinmayg/under-attack-website/blob/master/img/website.png"></a>
+<a href="https://erinmayg.github.io/under-attack-website" target="_blank"><img width="60%" src="https://github.com/erinmayg/under-attack-website/blob/master/img/website.png"></a>
 
 ## Installation and Download
 ### Setting Up for PC
