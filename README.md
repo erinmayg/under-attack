@@ -3,7 +3,7 @@ The C# script for the 2D-platformer. This repository only contains the scripts c
 To play the game, download the zip file or play it online on our <a href="https://erinmayg.github.io/under-attack-website">website!</a> <br>
 
 <br>
-<a href="https://erinmayg.github.io/under-attack-website"><img width="534" src="https://github.com/erinmayg/under-attack-website/blob/master/img/website.png"></a>
+<a href="https://erinmayg.github.io/under-attack-website"><img width="60%" src="https://github.com/erinmayg/under-attack-website/blob/master/img/website.png"></a>
 
 ## About the Game
 <img align="left" src="https://erinmayg.github.io/under-attack-website/img/level1.gif" height=180>
@@ -21,6 +21,15 @@ Hence, the total sublevels for this game is 13.
   <img align ="center" width="30%" height="17%" src="https://erinmayg.github.io/under-attack-website/img/features/Almanac.png">
   <img align ="right" width="30%" height="17%"src="https://erinmayg.github.io/under-attack-website/img/features/Gameplay.png">
 </p>
+
+### Almanac
+<img width="60%" height="17%" src="https://github.com/erinmayg/under-attack-website/blob/master/img/Almanac.gif">
+
+### Gameplay
+<img width="60%" height="17%" src="https://github.com/erinmayg/under-attack-website/blob/master/img/Gameplay.gif">
+
+### Minigame
+<img width="60%" height="17%" src="https://github.com/erinmayg/under-attack-website/blob/master/img/Minigame.gif">
 
 ## Content
 The contents of this repo include the following C# scripts created for the game:
