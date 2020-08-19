@@ -50,6 +50,8 @@ Hence, the total sublevels for this game is 13.
 The contents of this repo include the following C# scripts created for the game:
 - Player control and movement
 - Player combat
+- In-Game UI
+- Start Menu, Pause Menu, and Settings (Volume Control)
 - BG Parallax and Infinite Scrolling
 - Enemy
   - Basic patrolling enemy
