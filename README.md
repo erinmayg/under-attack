@@ -53,6 +53,9 @@ The contents of this repo include the following C# scripts created for the game:
 - In-Game UI
 - Start Menu, Pause Menu, and Settings (Volume Control)
 - BG Parallax and Infinite Scrolling
+- Player Powerups
+  - Shield
+  - Temporary invincibility (Instant-kill Mode)
 - Enemy
   - Basic patrolling enemy
   - Shooting enemy
@@ -64,9 +67,6 @@ The contents of this repo include the following C# scripts created for the game:
   - Almanac
   - In-game fact boxes
   - Dialogue box
-  - Powerups
-    - Shield
-    - Temporary invincibility
   
 ## Contributors
 - <a href="https://github.com/erinmayg">Erin May Gunawan</a>
